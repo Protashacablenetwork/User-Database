@@ -1,0 +1,8 @@
+{
+  "name": "User Database",
+  "description": "Google Sheets বাংলা ও ইংরেজি ডেটা মার্জিং, পৃথক ও যৌথ ভিউ, এনআইডি সার্চ এবং উন্নত ইউজার ম্যানেজমেন্ট সিস্টেম।",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,11 +1,54 @@
-<div align="center">
+# User Database Management System (Google Sheets Integrated)
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+প্রত্যাশা কেবল নেটওয়ার্ক (Protyasha Cable Network) ও গ্রাহক ডেটাবেস সিস্টেম।
 
-  <h1>Built with AI Studio</h2>
+---
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## 🛑 XAMPP (Apache) তে সাদা (Blank Screen) দেখানোর কারণ ও সমাধান
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+আপনার স্ক্রিনশট অনুযায়ী আপনি **XAMPP Apache Server** ব্যবহার করছেন এবং ব্রাউজারে `http://138.252.145.191/user.database/` (বা `htdocs/user.database/`) লিংক ওপেন করেছেন।
 
-</div>
+### কেন সাদা দেখাচ্ছিল?
+1. এটি একটি আধুনিক **React (Vite) Single Page Application**। আপনি যদি সরাসরি সোর্স কোড (`src`, `package.json`, `index.html`) XAMPP-এর `htdocs` ফোল্ডারে রেখে ব্রাউজারে ওপেন করেন, তাহলে ব্রাউজার সরাসরি TypeScript/JSX রান করতে পারে না, ফলে স্ক্রিন সাদা হয়ে থাকে।
+2. সাব-ফোল্ডারে (`/user.database/`) চালানোর জন্য পূর্বে ফাইলগুলোর পাথ রিলেটিভ (`./`) ছিল না। **আমরা এখন কোডে `base: './'` কনফিগার করে দিয়েছি**, যাতে XAMPP এর যেকোনো সাবফোল্ডারে এটি শতভাগ কাজ করে!
+
+---
+
+## 🚀 সমাধান: XAMPP তে চালানোর নিয়ম (২টি উপায়)
+
+### উপায় ১: `dist` ফোল্ডারের ফাইল XAMPP তে রাখা (সবচেয়ে সহজ ও সেরা উপায়)
+
+১. প্রথমে আপনার কম্পিউটারে প্রোজেক্টের ফোল্ডারে টার্মিনাল খুলে রান করুন:
+   ```bash
+   npm run build
+   ```
+২. বিল্ড শেষ হলে প্রোজেক্টের ভেতরে একটি **`dist`** ফোল্ডার তৈরি হবে।
+৩. সেই **`dist` ফোল্ডারের ভেতরের সমস্ত ফাইল ও ফোল্ডার** (`index.html`, `assets/`, ইত্যাদি) কপি করে আপনার XAMPP এর এই ডিরেক্টরিতে পেস্ট করুন:
+   ```
+   C:\xampp\htdocs\user.database\
+   ```
+৪. এবার ব্রাউজারে রিলোড দিন:
+   ```
+   http://138.252.145.191/user.database/
+   ```
+   👉 **সাথে সাথে সম্পূর্ণ ডেটাবেস ও ইন্টারফেস লোড হয়ে যাবে! কোনো সাদা স্ক্রিন থাকবে না।**
+
+---
+
+### উপায় ২: সরাসরি Node.js Dev Server চালানো (XAMPP ছাড়াই)
+আপনি চাইলে XAMPP এর Apache ছাড়াও সরাসরি রান করতে পারেন:
+```bash
+npm run dev
+```
+এবং ব্রাউজারে প্রবেশ করুন:
+```
+http://localhost:3000
+```
+অথবা আপনার লোকাল আইপি দিয়ে: `http://138.252.145.191:3000`
+
+---
+
+## 🛠 যা যা ঠিক করা হয়েছে (Fixes Included):
+1. **রিলেটিভ পাথ (`base: './'`) যুক্ত করা হয়েছে:** এখন XAMPP-এর `htdocs/user.database/` বা যেকোনো সাবফোল্ডারে বিল্ড ফাইল রাখলে সব CSS এবং JS সঠিকভাবে লোড হবে (৪MD বা ফাইল নট ফাউন্ড হবে না)।
+2. **গুগল ড্রাইভ ছবি ফিক্স:** `<meta name="referrer" content="no-referrer" />` এর ফলে Apache সার্ভারেও গুগল ড্রাইভের ছবিগুলো ব্লক হবে না।
+3. **লাইভ ডেটা ও অফলাইন সাপোর্ট:** গুগল শিট অনলাইনে থাকলে সরাসরি ডেটা আসবে, আর ইন্টারনেট না থাকলে ব্যাকআপ ডেটা স্বয়ংক্রিয়ভাবে লোড হবে।
